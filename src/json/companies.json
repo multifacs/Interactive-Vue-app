@@ -1,0 +1,33 @@
+[
+    {
+      "id": 0,
+      "name": "Intel",
+      "img": "intel.svg",
+      "url": "https://intel.com"
+    },
+    {
+      "id": 1,
+      "name": "IBS",
+      "img": "ibs.jpg",
+      "url": "https://ibs.ru/"
+    },
+    {
+      "id": 2,
+      "name": "OCS",
+      "img": "ocs.jpg",
+      "url": "https://www.ocs.ru/"
+    },
+    {
+      "id": 2,
+      "name": "OCS",
+      "img": "ocs.jpg",
+      "url": "https://www.ocs.ru/"
+    },
+    {
+      "id": 0,
+      "name": "Intel",
+      "img": "intel.svg",
+      "url": "https://intel.com"
+    }
+  ]
+  
