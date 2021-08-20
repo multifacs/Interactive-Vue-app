@@ -31,12 +31,41 @@
 
 <script>
 import { ref, inject, onMounted } from "vue";
-import CompanyCard from "@/components/about/CompanyCard.vue";
 import gsap from "gsap";
+import axios from 'axios';
+
+const requestURL = "https://reqres.in/api/users?page=1";
+
+const sendRequest = (method, url) => {
+  return fetch(url).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+
+    return response.json().then((error) => {
+      const e = new Error("Something went wrong");
+      e.data = error;
+      throw e;
+    });
+  });
+};
+
+// const sendRequest = (method, url) => {
+
+// return axios.get(url)
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .catch(function (error) {
+//     const e = new Error("Something went wrong");
+//       e.data = error;
+//       throw e;
+//   })
+// };
 
 export default {
   name: "App",
-  components: { CompanyCard },
+  components: { 'CompanyCard': require('@/components/about/CompanyCard.vue').default },
   setup() {
     const store = inject("store");
     const foo = ref("ass");
@@ -45,9 +74,9 @@ export default {
     const cardList = ref(store.state.companies);
 
     //recording
-    store.journal.records.push({
+    store.commit("addRecord", {
       event: "About.vue created()",
-      time: store.methods.getTime(),
+      time: store.getters.getTime,
     });
 
     //changing styles in a transition using js hooks instead of css
@@ -76,6 +105,12 @@ export default {
       let about = document.getElementsByClassName("about");
       console.log(about[0].classList);
       about[0].classList.add(store.state.about);
+
+      cardList.value = [];
+      sendRequest("GET", requestURL).then((data) => {
+        console.log(data.data);
+        cardList.value = data.data;
+      });
     });
 
     return {

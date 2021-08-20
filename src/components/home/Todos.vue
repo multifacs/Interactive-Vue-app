@@ -32,6 +32,32 @@
 <script>
 import { ref, inject, onMounted } from "vue";
 
+const requestURL = "https://jsonplaceholder.typicode.com/todos";
+
+const sendRequest = (method, url) => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open(method, url);
+
+    xhr.responseType = "json";
+
+    xhr.onload = () => {
+      if (xhr.status >= 400) {
+        reject(xhr.response);
+      } else {
+        resolve(xhr.response);
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(xhr.response);
+    };
+
+    xhr.send();
+  });
+};
+
 export default {
   name: "Todos",
   setup(_, context) {
@@ -40,11 +66,11 @@ export default {
     const input = ref(null);
 
     const addTodo = () => {
-      if (newTodo.value.trim() === store.pass) {
+      if (newTodo.value.trim() === store.getters.getPass) {
         listen();
         newTodo.value = "";
       } else if (newTodo.value.trim()) {
-        store.methods.addTodo(newTodo.value);
+        store.commit('addTodo', newTodo.value);
         newTodo.value = "";
       } else {
         context.emit("errorOccured");
@@ -56,7 +82,7 @@ export default {
     };
 
     const deleteTodo = (id) => {
-      store.methods.deleteTodo(id);
+      store.commit('deleteTodo', id);
       if (store.state.todos.length === 0) {
         // using ref to get access to an element
         input.value.placeholder = "Hurry up and add something!";
@@ -81,6 +107,20 @@ export default {
         // using ref to get access to an element
         input.value.placeholder = "Hurry up and add something!";
       }
+
+      console.log(input.value);
+
+      sendRequest("GET", requestURL)
+      .then(data => {
+        //console.log(data[0]);
+
+        for(let i = data.length - 5; i < data.length; i++) {
+          console.log(i);
+          //console.log(data[i].title);
+          newTodo.value = data[i].title;
+          addTodo();
+        }
+      });
     });
 
     return { store, addTodo, newTodo, deleteTodo, input, listen, deleteAll };

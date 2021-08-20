@@ -28,25 +28,22 @@
 // @ is an alias to /src
 import { ref, inject, onMounted } from "vue";
 
-import HelloWorld from "@/components/home/HelloWorld.vue";
-import Error from "@/components/home/Error.vue";
-import Todos from "@/components/home/Todos.vue";
-
 export default {
   name: "Home",
   components: {
-    HelloWorld,
-    Todos,
-    Error,
+    //A neater way to import components
+    'HelloWorld': require('@/components/home/HelloWorld.vue').default,
+    'Todos': require('@/components/home/Todos.vue').default,
+    'Error': require('@/components/home/Error.vue').default
   },
   setup(_, { emit }) {
     const store = inject("store");
     const showError = ref(false);
 
     //recording
-    store.journal.records.push({
+    store.commit("addRecord", {
       event: "Home.vue created()",
-      time: store.methods.getTime(),
+      time: store.getters.getTime,
     });
 
     const triggerError = () => {

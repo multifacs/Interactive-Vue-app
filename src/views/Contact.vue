@@ -19,6 +19,8 @@
           </li>
         </transition-group>
       </div>
+      <Form @change="update"/>
+      <Feedback></Feedback>
     </div>
   </div>
 </template>
@@ -28,8 +30,14 @@ import { ref, inject, onMounted } from "vue";
 import gsap from "gsap";
 
 export default {
+  name: "Contact",
+  components: {
+    'Form': require('@/components/contact/Form.vue').default,
+    'Feedback': require('@/components/contact/Feedback.vue').default
+  },
   setup() {
     const store = inject("store");
+    const elem = ref(null);
 
     const icons = ref([
       { name: "alternate_email", text: "by email" },
@@ -39,15 +47,16 @@ export default {
     ]);
 
     //recording
-    store.journal.records.push({
+    store.commit("addRecord", {
       event: "Contact.vue created()",
-      time: store.methods.getTime(),
+      time: store.getters.getTime,
     });
 
     onMounted(() => {
       let contact = document.getElementsByClassName("contact");
       console.log(contact[0].classList);
       contact[0].classList.add(store.state.contact);
+      console.log("CHECKING REF " + elem.value);
     });
 
     const beforeEnter = (el) => {
@@ -64,7 +73,12 @@ export default {
       });
     };
 
-    return { icons, beforeEnter, enter };
+    const update = () => {
+      console.log("updated");
+      //setTimeout(() => {store.dispatch('getFeedback')}, 2000);
+    }
+
+    return { icons, beforeEnter, enter, update, elem };
   },
 };
 </script>

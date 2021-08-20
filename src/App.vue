@@ -22,9 +22,10 @@
 
 <script>
 import { ref, provide } from "vue";
-import store from "@/store/main.js";
+import { useStore } from "vuex";
 export default {
   setup() {
+    const store = useStore();
     provide("store", store);
     const showControl = ref(false);
 
