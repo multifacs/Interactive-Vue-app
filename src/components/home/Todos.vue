@@ -161,6 +161,8 @@ input {
   border-radius: 10px;
   width: 100%;
   box-sizing: border-box;
+  user-select: none;
+  cursor: pointer;
 }
 
 .list-enter-from,

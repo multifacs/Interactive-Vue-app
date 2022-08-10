@@ -133,7 +133,6 @@ export default {
 
 .about {
   background-image: linear-gradient(60deg, #abecd6 0%, #fbed96 100%);
-  min-height: 90vh;
 }
 
 .about-content {

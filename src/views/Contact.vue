@@ -1,7 +1,6 @@
 <template>
-  <div class="contact">
     <div class="contact-content">
-      <div>
+      <div class="contacts">
         <h1>Contact</h1>
         <transition-group
           appear
@@ -22,7 +21,6 @@
       <Form @change="update"/>
       <Feedback></Feedback>
     </div>
-  </div>
 </template>
 
 <script>
@@ -53,7 +51,7 @@ export default {
     });
 
     onMounted(() => {
-      let contact = document.getElementsByClassName("contact");
+      let contact = document.getElementsByClassName("contact-content");
       console.log(contact[0].classList);
       contact[0].classList.add(store.state.contact);
       console.log("CHECKING REF " + elem.value);
@@ -84,12 +82,9 @@ export default {
 </script>
 
 <style scoped>
-.contact {
-  /* background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%); */
-  min-height: 90vh;
-}
 
 .contact-content {
+  flex: auto;
   padding: 30px;
 }
 
@@ -105,7 +100,7 @@ export default {
   background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
 }
 
-.contact ul {
+.contacts ul {
   padding: 0;
   /* Here's the proper way to do columns */
   display: grid;
@@ -114,7 +109,7 @@ export default {
   max-width: 400px;
   margin: 60px auto;
 }
-.contact li {
+.contacts li {
   list-style-type: none;
   background: white;
   padding: 30px;

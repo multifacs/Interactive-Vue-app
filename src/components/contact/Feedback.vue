@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="feedback">
     <li v-for="feedback of feedbacks" :key="feedback.id">
       <h6>User: {{ feedback.user_id }}</h6>
       <h5>Title: {{ feedback.title }}</h5>
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-li {
+.feedback li {
   list-style: none;
   border: 1px solid #ced4da;
   border-radius: 5px;

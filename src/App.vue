@@ -1,5 +1,5 @@
 <template>
-  <transition-group tag="div" id="nav" name="nav">
+  <transition-group tag="header" name="nav">
     <router-link to="/" key="lorem1">Home</router-link
     ><span key="lorem2">|</span>
     <router-link to="/about" key="lorem3">About</router-link
@@ -11,13 +11,17 @@
     >
   </transition-group>
 
-  <router-view v-slot="{ Component }">
-    <transition name="fade" mode="out-in">
-      <component :is="Component" @triggerControl="trigger" @wrap-up="wrapUp" />
-    </transition>
-  </router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" @triggerControl="trigger" @wrap-up="wrapUp" />
+      </transition>
+    </router-view>
 
-  <div id="footer">All rights reserved ©</div>
+  <footer>
+    <h4>
+      All rights reserved ©
+    </h4>
+  </footer>
 </template>
 
 <script>
@@ -62,8 +66,9 @@ export default {
 </script>
 
 <style>
-body {
+* {
   margin: 0;
+  font-family: Candara;
 }
 
 #app {
@@ -71,6 +76,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .ctrl {
@@ -79,17 +88,18 @@ body {
   color: red;
 }
 
-#nav {
+header {
   /*padding: 30px;*/
-  height: 7vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 20%;
   margin-inline: auto;
+  flex-shrink: 0;
+  padding: 10px;
 }
 
-#nav a {
+header a {
   font-weight: bold;
   color: #2c3e50;
 }
@@ -98,7 +108,7 @@ body {
   color: white;
 }
 
-#nav a.router-link-exact-active {
+header a.router-link-exact-active {
   color: #42b983;
 }
 
@@ -116,11 +126,11 @@ body {
   transform: scale(0.8);
 }
 
-#footer {
-  height: 1vh;
+footer {
   display: inline;
   vertical-align: 0%;
   align-items: center;
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 1200px) {
